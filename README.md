@@ -50,7 +50,12 @@
 ![](https://i.imgur.com/eB4ZaJb.png)
 
 ## Wireframe das telas
-https://www.figma.com/file/VcuoQPY4XKOYP0qX4z11or/projeto-ED1?node-id=4%3A8
+Figma - https://www.figma.com/file/VcuoQPY4XKOYP0qX4z11or/projeto-ED1?node-id=4%3A8
 
 ## Arquitetura
   A arquitetura utilizada será o MVC (model-view-controller). As camadas “model” e “controller” serão implementadas no backend, enquanto a camada “view” será implementada no frontend.
+
+## Links dos repositórios
+Front - https://github.com/GuilhermeA08/ED1-frontend
+<br>
+Back - https://github.com/GuilhermeA08/ED1-backend
