@@ -27,4 +27,10 @@ public class User extends BaseEntity {
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
+	
+	public void copy(User dto) {
+		setName(dto.getName());
+		setEmail(dto.getEmail());
+		setPassword(dto.getPassword());
+	}
 }
