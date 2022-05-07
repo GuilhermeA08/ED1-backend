@@ -95,6 +95,41 @@ public class ControllerExceptionHandler {
     	return createHttpErrorInfo(errors);
     }
     
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseBody
+    public HttpErrorInfo handleRuntimeExceptions(RuntimeException ex) {
+        log.info("Message: {}", ex.getMessage());
+        
+        Throwable t = ex.getCause();
+        if(t instanceof org.hibernate.exception.ConstraintViolationException) {
+        	List<String> error = new ArrayList<>();
+        	
+        	String message = t.getCause().getMessage();
+        	
+			// Pegar qual campo que está duplicado e qual o valor dele
+			String field = message.substring(message.indexOf("(") + 1, message.indexOf(")"));
+			String value = message.substring(message.lastIndexOf("(") + 1 , message.lastIndexOf(")"));
+			
+			// Pegar a causa da excessão
+			String cause = message.substring(message.indexOf(")"), message.indexOf(".") + 1);
+			cause = cause.substring(cause.indexOf(" ") + 1, cause.indexOf(".") + 1);
+			
+			if(cause.startsWith("is not present in table")) {
+				error.add(field.toUpperCase() + " not found, try again with another " + field.toUpperCase());
+			}else {
+				error.add(field.toUpperCase() + " " + value + " already registered, try again with another " + field.toUpperCase());
+			}
+			
+			return createHttpErrorInfo(error);
+		}
+        
+        List<String> msg = new ArrayList<>();
+        msg.add(ex.getMessage());
+        
+        return createHttpErrorInfo(msg);
+    }
+    
 
     private HttpErrorInfo createHttpErrorInfo(List<String> msg) {
         return HttpErrorInfo.builder()
