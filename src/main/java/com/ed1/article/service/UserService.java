@@ -47,6 +47,7 @@ public class UserService {
 		return userRepository.save(userEntity);
 	}
 	
+	@Transactional
 	public void deleteUser(Long id) {
 		Optional<User> userOpt = userRepository.findById(id);
 		User userEntity = userOpt.orElseThrow(() -> new EntityNotFoundException("Entity not found"));
