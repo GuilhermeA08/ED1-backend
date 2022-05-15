@@ -1,28 +1,18 @@
 package com.ed1.article.structures.List;
 
-public class DoubleLinkedList<T> implements InterfaceDoubleLinkedList<T> {
+import java.util.Collection;
+import java.util.Iterator;
 
-  Node first;
-  Node last;
-  int size;
+public class DoubleLinkedList<T> implements Iterable<Node<T>> {
+
+  Node<T> first;
+  Node<T> last;
+  int size = 0;
 
   /**
    * Node
    */
-  public class Node {
 
-    T data;
-    Node prev;
-    Node next;
-
-    public Node(T data) {
-      this.data = data;
-      this.prev = null;
-      this.next = null;
-    }
-  }
-
-  @Override
   public T getFirst() {
     if (first == null) {
       System.out.println("Lista Vazia!!!");
@@ -31,7 +21,6 @@ public class DoubleLinkedList<T> implements InterfaceDoubleLinkedList<T> {
     return first.data;
   }
 
-  @Override
   public T getLast() {
     if (last == null) {
       System.out.println("Lista Vazia!!!");
@@ -40,9 +29,8 @@ public class DoubleLinkedList<T> implements InterfaceDoubleLinkedList<T> {
     return last.data;
   }
 
-  @Override
   public T removeFirst() {
-    Node responseNode = first;
+    Node<T> responseNode = first;
 
     if (first == null) {
       System.out.println("Lista Vazia!!!");
@@ -61,9 +49,8 @@ public class DoubleLinkedList<T> implements InterfaceDoubleLinkedList<T> {
     return responseNode.data;
   }
 
-  @Override
   public T removeLast() {
-    Node response = last;
+    Node<T> response = last;
 
     if (last == null) {
       System.out.println("Lista Vazia!!!");
@@ -81,9 +68,8 @@ public class DoubleLinkedList<T> implements InterfaceDoubleLinkedList<T> {
     return response.data;
   }
 
-  @Override
   public void addFirst(T element) {
-    Node elementNode = new Node(element);
+    Node<T> elementNode = new Node<T>(element);
 
     if (first == null) {
       first = elementNode;
@@ -95,9 +81,8 @@ public class DoubleLinkedList<T> implements InterfaceDoubleLinkedList<T> {
     }
   }
 
-  @Override
   public void addLast(T element) {
-    Node elementNode = new Node(element);
+    Node<T> elementNode = new Node<T>(element);
 
     if (last == null) {
       first = elementNode;
@@ -107,5 +92,38 @@ public class DoubleLinkedList<T> implements InterfaceDoubleLinkedList<T> {
       elementNode.prev = last;
       last = elementNode;
     }
+  }
+
+  public boolean addAll(Collection<? extends T> collection) {
+    for (T t : collection) {
+      this.addLast(t);
+    }
+    return true;
+  }
+
+  @Override
+  public String toString() {
+    return "test";
+  }
+
+  @Override
+  public Iterator<Node<T>> iterator() {
+    return new Iterator<Node<T>>() {
+      Node<T> node = first;
+
+      @Override
+      public boolean hasNext() {
+        if (node.next != null) {
+          return true;
+        }
+        return false;
+      }
+
+      @Override
+      public Node<T> next() {
+        node = node.next;
+        return node;
+      }
+    };
   }
 }
