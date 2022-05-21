@@ -44,6 +44,11 @@ public class User extends BaseEntity {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Article> articles = new HashSet<>();
 	
+	@JsonIdentityReference(alwaysAsId = true)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Rating> ratings = new HashSet<>();
+	
 	public void copy(User dto) {
 		setName(dto.getName());
 		setEmail(dto.getEmail());

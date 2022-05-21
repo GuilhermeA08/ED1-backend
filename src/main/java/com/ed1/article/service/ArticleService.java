@@ -2,8 +2,12 @@ package com.ed1.article.service;
 
 import com.ed1.article.model.Article;
 import com.ed1.article.repository.ArticleRepository;
+import com.ed1.article.repository.RatingRepository;
+import com.ed1.article.repository.UserRepository;
 import com.ed1.article.structures.List.DoubleLinkedList;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,12 @@ public class ArticleService {
 
   @Autowired
   private ArticleRepository articleRepository;
+  
+  @Autowired
+  private UserRepository userRepository;
+  
+  @Autowired
+  private RatingRepository ratingRepository;
 
   @Transactional(readOnly = true)
   public DoubleLinkedList<Article> findAll() {
@@ -45,6 +55,19 @@ public class ArticleService {
     );
 
     articleEntity.copy(articleDto);
+    
+    // Relacionamento com usuário
+    articleEntity.setUser(
+    	userRepository.findById(articleDto.getUser().getId())
+    		.orElseThrow(() -> new EntityNotFoundException("Entity not found"))
+    );
+    
+    // Relacionamento com avaliação
+    articleEntity.setRatings(
+    	articleDto.getRatings().stream().map(rating -> {
+    		return ratingRepository.findById(rating.getId()).orElseThrow(() -> new EntityNotFoundException("Entity not found"));
+    	}).collect(Collectors.toSet())
+    );
 
     return articleRepository.save(articleEntity);
   }
