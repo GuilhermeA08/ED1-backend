@@ -1,6 +1,5 @@
 package com.ed1.article.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -11,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ed1.article.model.User;
 import com.ed1.article.repository.UserRepository;
+import com.ed1.article.structures.List.DoubleLinkedList;
 
 @Service
 public class UserService {
@@ -19,8 +19,9 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	@Transactional(readOnly = true)
-	public List<User> findAll() {
-		List<User> userList = userRepository.findAll();
+	public DoubleLinkedList<User> findAll() {
+		DoubleLinkedList<User> userList = new DoubleLinkedList<>();
+		userList.addAll(userRepository.findAll());
 		return userList;
 	}
 	

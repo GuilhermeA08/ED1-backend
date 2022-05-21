@@ -1,7 +1,6 @@
 package com.ed1.article.controller;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ed1.article.model.User;
 import com.ed1.article.service.UserService;
+import com.ed1.article.structures.List.DoubleLinkedList;
 
 @RestController
 @RequestMapping("/users")
@@ -26,8 +26,8 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping
-	public ResponseEntity<List<User>> findAll(){
-		List<User> userList = userService.findAll();
+	public ResponseEntity<DoubleLinkedList<User>> findAll(){
+		DoubleLinkedList<User> userList = userService.findAll();
 		return ResponseEntity.ok().body(userList);
 	}
 	

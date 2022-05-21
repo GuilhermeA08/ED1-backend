@@ -3,6 +3,8 @@ package com.ed1.article.controller;
 import com.ed1.article.model.Article;
 import com.ed1.article.service.ArticleService;
 import com.ed1.article.structures.List.DoubleLinkedList;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ public class ArticleController {
   private ArticleService articleService;
 
   @GetMapping
-  public ResponseEntity<DoubleLinkedList<Article>> findAll() {
+  public ResponseEntity<DoubleLinkedList<Article>> findAll() throws JsonProcessingException {
     DoubleLinkedList<Article> articleList = articleService.findAll();
     return ResponseEntity.ok().body(articleList);
   }
