@@ -16,4 +16,6 @@ public interface InterfaceDoubleLinkedList<T> {
   public void addLast(T element);
 
   public boolean addAll(Collection<? extends T> collection);
+  
+  public boolean isEmpty();
 }

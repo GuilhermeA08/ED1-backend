@@ -35,7 +35,7 @@ public class DoubleLinkedList<T> implements InterfaceDoubleLinkedList<T> {
 	@JsonValue(value = true)
 	@SuppressWarnings("unchecked")
 	public T[] getAll() {
-		Object[] listAll = new Object[size];
+		T[] listAll = (T[]) new Object[size];
 		
 		Node<T> indexNode = first;
 		int indexList = 0;
@@ -49,7 +49,7 @@ public class DoubleLinkedList<T> implements InterfaceDoubleLinkedList<T> {
 			} while(indexNode != null);
 		}
 		
-		return (T[]) listAll;
+		return listAll;
 	}
 
 	public T removeFirst() {
@@ -124,6 +124,15 @@ public class DoubleLinkedList<T> implements InterfaceDoubleLinkedList<T> {
 			this.addLast(t);
 		}
 		return true;
+	}
+
+	@JsonIgnore
+	public boolean isEmpty() {
+		if(size == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

@@ -11,4 +11,10 @@ import java.util.List;
 public class HttpErrorInfo {
     private final ZonedDateTime timestamp = ZonedDateTime.now();
     private final List<String> message;
+    
+    public String toString() {
+    	return "{" + 
+	    		"\"timestamp\":" + timestamp.toInstant().toEpochMilli() + "," +
+	    		"\"message\":[\"" + message.get(0) +"\"]}";
+    }
 }

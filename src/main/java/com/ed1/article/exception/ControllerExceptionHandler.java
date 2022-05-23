@@ -2,6 +2,7 @@ package com.ed1.article.exception;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -130,6 +131,17 @@ public class ControllerExceptionHandler {
         return createHttpErrorInfo(msg);
     }
     
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(InternalAuthenticationServiceException.class)
+    @ResponseBody
+    public HttpErrorInfo handleInternalAuthenticationServiceException(InternalAuthenticationServiceException ex) {
+    	log.info("Message: {}", ex);
+    	
+    	List<String> msg = new ArrayList<>();
+    	msg.add(ex.getMessage());
+         
+        return createHttpErrorInfo(msg);
+    }
 
     private HttpErrorInfo createHttpErrorInfo(List<String> msg) {
         return HttpErrorInfo.builder()
