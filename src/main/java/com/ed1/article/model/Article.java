@@ -10,6 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ed1.article.dto.FileResponseDTO;
+import com.ed1.article.util.FileUtil;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,4 +47,8 @@ public class Article extends BaseEntity {
 		setAttachment(dto.getAttachment());
 	}
 
+	@JsonProperty("attachment")
+	public FileResponseDTO getNoticeDetails() {
+		return FileUtil.generateUriFrom(attachment, getId());
+	}
 }
