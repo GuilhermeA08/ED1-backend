@@ -44,7 +44,6 @@ public class Article extends BaseEntity {
 	public void copy(Article dto) {
 		setTitle(dto.getTitle());
 		setContents(dto.getContents());
-		setAttachment(dto.getAttachment());
 	}
 
 	@JsonProperty("attachment")
