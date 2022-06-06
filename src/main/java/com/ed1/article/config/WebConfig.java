@@ -1,5 +1,6 @@
 package com.ed1.article.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -12,8 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 	
-//	@Value("${upload.directory}")
-//	private String uploadDirectory;
+	@Value("${upload.directory}")
+	private String uploadDirectory;
 	
 	@Bean
 	public WebMvcConfigurer customConfigurer() {
@@ -36,6 +37,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
     	registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
     	registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-//    	registry.addResourceHandler("/resources/**").addResourceLocations("file:" + uploadDirectory);
+    	registry.addResourceHandler("/resources/**").addResourceLocations("file:" + uploadDirectory);
     }
 }
